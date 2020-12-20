@@ -57,3 +57,9 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# ignore the pyenv
+/Server/bin/
+/Server/lib/
+/Server/.env
+/Server/__pycache__/
