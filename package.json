@@ -10,10 +10,14 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/slider": "^3.0.3",
+    "@terrylinla/react-native-sketch-canvas": "^0.8.0",
     "graphql": "^15.4.0",
     "graphql-request": "^3.4.0",
     "react": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-color-palette": "^2.2.0",
+    "react-native-vector-icons": "^7.1.0",
     "react-query": "^3.3.4"
   },
   "devDependencies": {
