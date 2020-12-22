@@ -20,8 +20,22 @@ const App = () => {
           activeTintColor: '#83b2d0',
           inactiveTintColor: 'gray',
         }}>
-        <Tab.Screen name="Network" component={GQLApp.App}></Tab.Screen>
-        <Tab.Screen name="Drawing" component={DrawingApp.App}></Tab.Screen>
+        <Tab.Screen
+          name="Network"
+          component={GQLApp.App}
+          options={{
+            tabBarIcon: ({color, size}) => (
+              <Icon name={`code-working-outline`} color={color} size={size} />
+            ),
+          }}></Tab.Screen>
+        <Tab.Screen
+          name="Drawing"
+          component={DrawingApp.App}
+          options={{
+            tabBarIcon: ({color, size}) => (
+              <Icon name={`pencil`} color={color} size={size} />
+            ),
+          }}></Tab.Screen>
       </Tab.Navigator>
     </NavigationContainer>
   );
