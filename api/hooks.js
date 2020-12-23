@@ -16,7 +16,7 @@ function useAuthor(name) {
       }
     `;
     try {
-      const resp = await request('http://localhost:5000/graphql', query);
+      const resp = await request('http://192.168.86.247:5000/graphql', query);
       return resp;
     } catch (error) {
       console.warn(error);
@@ -40,7 +40,7 @@ function useNotes() {
       }
     `;
     try {
-      const resp = await request('http://localhost:5000/graphql', query);
+      const resp = await request('http://192.168.86.247:5000/graphql', query);
       return resp;
     } catch (error) {
       console.warn(error);
@@ -65,7 +65,7 @@ function useMutateNote() {
       }
     `;
     try {
-      const resp = await request('http://localhost:5000/graphql', query);
+      const resp = await request('http://192.168.86.247:5000/graphql', query);
       return resp;
     } catch (error) {
       console.warn(error);

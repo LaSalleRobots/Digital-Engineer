@@ -27,7 +27,8 @@ const App = () => {
             tabBarIcon: ({color, size}) => (
               <Icon name={`code-working-outline`} color={color} size={size} />
             ),
-          }}></Tab.Screen>
+          }}
+        />
         <Tab.Screen
           name="Drawing"
           component={DrawingApp.App}
@@ -35,7 +36,8 @@ const App = () => {
             tabBarIcon: ({color, size}) => (
               <Icon name={`pencil`} color={color} size={size} />
             ),
-          }}></Tab.Screen>
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

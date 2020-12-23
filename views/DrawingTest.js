@@ -51,7 +51,7 @@ const App = () => {
               var request = new XMLHttpRequest();
               request.open(
                 'POST',
-                'http://192.168.86.21:5000/api/v1/save',
+                'http://192.168.86.247:5000/api/v1/save',
                 true,
               );
               request.setRequestHeader(
