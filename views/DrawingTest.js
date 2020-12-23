@@ -4,10 +4,11 @@ import {Button, SafeAreaView, Text, View} from 'react-native';
 import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
 import ColorPalette from 'react-native-color-palette';
 import Slider from '@react-native-community/slider';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const App = () => {
   let [color, setColor] = useState('#ff5959');
-  let [strokeWidth, setStrokeWidth] = useState(0);
+  let [strokeWidth, setStrokeWidth] = useState(10);
   let [canvasRef, setCanvasRef] = useState(null);
   return (
     <SafeAreaView
@@ -21,6 +22,12 @@ const App = () => {
         style={{
           flexDirection: 'row',
         }}>
+        <Button
+          title={'Take Photo'}
+          onPress={() => {
+            alert('photo now pls');
+          }}
+        />
         <Button
           title={'Clear'}
           onPress={() => {
@@ -70,7 +77,7 @@ const App = () => {
         onChange={(c) => setColor(c)}
         value={color}
         colors={['#ff5959', '#ffad5a', '#4f9da6', '#1a0841', '#00000000']}
-        icon={<Text style={{color: 'white'}}>✔</Text>}
+        icon={<Icon name={'checkmark'} size={25} color={'black'} />}
         title={''}
       />
       <View
