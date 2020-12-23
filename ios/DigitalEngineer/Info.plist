@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -55,7 +55,10 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Octicons.ttf</string>
 		<string>Ionicons.ttf</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>To capture notes and robots</string>
 </dict>
 </plist>

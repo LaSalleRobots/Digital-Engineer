@@ -8,6 +8,7 @@ import {
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as GQLApp from './GQLTest';
 import * as DrawingApp from './DrawingTest';
+import * as CameraTest from './CameraTest';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
@@ -35,6 +36,15 @@ const App = () => {
           options={{
             tabBarIcon: ({color, size}) => (
               <Icon name={`pencil`} color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Camera"
+          component={CameraTest.App}
+          options={{
+            tabBarIcon: ({color, size}) => (
+              <Icon name={`camera`} color={color} size={size} />
             ),
           }}
         />
