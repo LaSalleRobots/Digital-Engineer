@@ -9,6 +9,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import * as GQLApp from './GQLTest';
 import * as DrawingApp from './DrawingTest';
 import * as CameraTest from './CameraTest';
+import * as CanvasCamera from './CanvasCamera';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const Tab = createBottomTabNavigator();
@@ -48,6 +49,7 @@ const App = () => {
             ),
           }}
         />
+        <Tab.Screen name="Both" component={CanvasCamera.App} />
       </Tab.Navigator>
     </NavigationContainer>
   );

@@ -14,7 +14,7 @@ import ColorPalette from 'react-native-color-palette';
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const App = () => {
+const DrawingView = ({onSave}) => {
   let [color, setColor] = useState('#ff5959');
   let [strokeWidth, setStrokeWidth] = useState(10);
   let [camera, setCamera] = useState(null);
@@ -56,21 +56,7 @@ const App = () => {
           title={'Save'}
           onPress={() => {
             canvasRef.getBase64('png', false, true, true, true, (err, res) => {
-              if (err) {
-                console.warn(err);
-                return;
-              }
-              var request = new XMLHttpRequest();
-              request.open(
-                'POST',
-                'http://192.168.86.247:5000/api/v1/save',
-                true,
-              );
-              request.setRequestHeader(
-                'Content-Type',
-                'text/plain charset=utf-8',
-              );
-              request.send(res);
+              onSave != undefined ? onSave(err, res) : null;
             });
           }}
         />
@@ -148,5 +134,5 @@ const App = () => {
   );
 };
 
-export default App;
-export {App};
+export default DrawingView;
+export {DrawingView};
