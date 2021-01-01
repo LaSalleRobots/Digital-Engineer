@@ -117,26 +117,30 @@ const NewNote = ({mutation}) => {
             style={{margin: 5}}>
             <Icon name={'brush-outline'} size={25} />
           </TouchableOpacity>
-          <Image
-            source={{
-              uri: `data:image/png;base64,${base64Img}`,
-            }}
-            style={{
-              height: 50,
-              width: 50,
-              margin: 5,
-            }}
-          />
-          <Image
-            source={{
-              uri: `data:image/png;base64,${base64Drawing}`,
-            }}
-            style={{
-              height: 50,
-              width: 50,
-              margin: 5,
-            }}
-          />
+          {base64Img === '' ? null : (
+            <Image
+              source={{
+                uri: `data:image/png;base64,${base64Img}`,
+              }}
+              style={{
+                height: 50,
+                width: 50,
+                margin: 5,
+              }}
+            />
+          )}
+          {base64Drawing === '' ? null : (
+            <Image
+              source={{
+                uri: `data:image/png;base64,${base64Drawing}`,
+              }}
+              style={{
+                height: 50,
+                width: 50,
+                margin: 5,
+              }}
+            />
+          )}
         </View>
       </View>
 
