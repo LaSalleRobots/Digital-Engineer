@@ -31,6 +31,8 @@ class InputNoteType(InputObjectType):
     body = String(required=True)
     name = String(required=True)
     date = Date()
+    photo = String(description="Base64 encoded png")
+    drawing = String(description="Base64 encoded drawing")
 
 
 class CreateNote(Mutation):
@@ -41,13 +43,16 @@ class CreateNote(Mutation):
     ok = Boolean()
 
     def mutate(root, info, note_data, author):
-        note = db["notes"].insert_one(
-            {
-                "name": note_data["name"],
-                "body": note_data["body"],
-                "date": datetime.datetime.now(),
-            }
-        )
+        noteObj = {
+            "name": note_data["name"],
+            "body": note_data["body"],
+            "date": datetime.datetime.now(),
+        }
+        if note_data.get("photo"):
+            noteObj["photo"] = note_data.get("photo")
+        if note_data.get("drawing"):
+            noteObj["drawing"] = note_data.get("drawing")
+        note = db["notes"].insert_one(noteObj)
         a = db["authors"].find_one_and_update(
             {"$text": {"$search": author}}, {"$push": {"notes": str(note.inserted_id)}}
         )

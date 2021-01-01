@@ -52,24 +52,87 @@ function useNotes() {
 function useMutateNote() {
   return useMutation(async (newNote) => {
     console.log(JSON.stringify(newNote));
-    const query = gql`
+
+    if (newNote.photo != '' && newNote.drawing != '') {
+      const query = gql`
       mutation {
-        note(
-          author: "${String(newNote.author)}"
-          noteData: {body: "${String(newNote.body)}", name: "${String(
-      newNote.name,
-    )}"}
-        ) {
+        note(author: "${String(newNote.author)}", 
+        noteData: {
+          name: "${String(newNote.name)}", 
+          body: "${String(newNote.body)}", 
+          photo: "data:image/png;base64,${String(newNote.photo)
+            .replace('\r', '')
+            .replace('\n', '')}", 
+          drawing: "data:image/png;base64,${String(newNote.drawing)
+            .replace('\r', '')
+            .replace('\n', '')}"}) {
           ok
         }
+      }`;
+      try {
+        const resp = await request('http://192.168.86.247:5000/graphql', query);
+        return resp;
+      } catch (error) {
+        console.warn(error);
+        throw error;
       }
-    `;
-    try {
-      const resp = await request('http://192.168.86.247:5000/graphql', query);
-      return resp;
-    } catch (error) {
-      console.warn(error);
-      throw error;
+    } else if (newNote.photo != '') {
+      const query = gql`
+        mutation {
+          note(author: "${String(newNote.author)}", 
+          noteData: {
+            name: "${String(newNote.name)}", 
+            body: "${String(newNote.body)}", 
+            photo: "data:image/png;base64,${String(newNote.photo)
+              .replace('\r', '')
+              .replace('\n', '')}"}) {
+            ok
+          }
+      }`;
+      try {
+        const resp = await request('http://192.168.86.247:5000/graphql', query);
+        return resp;
+      } catch (error) {
+        console.warn(error);
+        throw error;
+      }
+    } else if (newNote.drawing != '') {
+      const query = gql`
+        mutation {
+          note(author: "${String(newNote.author)}", 
+          noteData: {
+            name: "${String(newNote.name)}", 
+            body: "${String(newNote.body)}", 
+            drawing: "data:image/png;base64,${String(newNote.drawing)
+              .replace('\r', '')
+              .replace('\n', '')}"}) {
+            ok
+          }
+      }`;
+      try {
+        const resp = await request('http://192.168.86.247:5000/graphql', query);
+        return resp;
+      } catch (error) {
+        console.warn(error);
+        throw error;
+      }
+    } else {
+      const query = gql`
+          mutation {
+            note(author: "${String(newNote.author)}", 
+            noteData: {
+              name: "${String(newNote.name)}", 
+              body: "${String(newNote.body)}"}) {
+              ok
+            }
+        }`;
+      try {
+        const resp = await request('http://192.168.86.247:5000/graphql', query);
+        return resp;
+      } catch (error) {
+        console.warn(error);
+        throw error;
+      }
     }
   });
 }

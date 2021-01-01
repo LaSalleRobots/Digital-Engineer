@@ -19,6 +19,8 @@ class Note(ObjectType):
     body = String(description="The content of the note")
     authors = List(Author, description="The authors of this note")
     name = String()
+    photo = String()
+    drawing = String()
     date = Date()
 
     def resolve_authors(root, info):
