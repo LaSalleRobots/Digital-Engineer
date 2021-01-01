@@ -51,26 +51,34 @@ function useNotes() {
 
 function useMutateNote() {
   return useMutation(async (newNote) => {
-    console.log(JSON.stringify(newNote));
+    //console.log(JSON.stringify(newNote));
 
     if (newNote.photo != '' && newNote.drawing != '') {
       const query = gql`
-      mutation {
-        note(author: "${String(newNote.author)}", 
-        noteData: {
-          name: "${String(newNote.name)}", 
-          body: "${String(newNote.body)}", 
-          photo: "data:image/png;base64,${String(newNote.photo)
-            .replace('\r', '')
-            .replace('\n', '')}", 
-          drawing: "data:image/png;base64,${String(newNote.drawing)
-            .replace('\r', '')
-            .replace('\n', '')}"}) {
-          ok
+        mutation Images($photo: String, $drawing: String) {
+          note(
+            author: "${String(newNote.author)}"
+            noteData: {
+              name: "${String(newNote.name)}"
+              body: "${String(newNote.body)}"
+              photo: $photo
+              drawing: $drawing
+            }
+          ) {
+            ok
+          }
         }
-      }`;
+      `;
+      const variables = {
+        photo: `data:image/png;base64,${newNote.photo}`,
+        drawing: `data:image/png;base64,${newNote.drawing}`,
+      };
       try {
-        const resp = await request('http://192.168.86.247:5000/graphql', query);
+        const resp = await request(
+          'http://192.168.86.247:5000/graphql',
+          query,
+          variables,
+        );
         return resp;
       } catch (error) {
         console.warn(error);
@@ -78,19 +86,28 @@ function useMutateNote() {
       }
     } else if (newNote.photo != '') {
       const query = gql`
-        mutation {
-          note(author: "${String(newNote.author)}", 
-          noteData: {
-            name: "${String(newNote.name)}", 
-            body: "${String(newNote.body)}", 
-            photo: "data:image/png;base64,${String(newNote.photo)
-              .replace('\r', '')
-              .replace('\n', '')}"}) {
+        mutation Images($photo: String) {
+          note(
+            author: "${String(newNote.author)}"
+            noteData: {
+              name: "${String(newNote.name)}"
+              body: "${String(newNote.body)}"
+              photo: $photo
+            }
+          ) {
             ok
           }
-      }`;
+        }
+      `;
+      const variables = {
+        photo: `data:image/png;base64,${newNote.photo}`,
+      };
       try {
-        const resp = await request('http://192.168.86.247:5000/graphql', query);
+        const resp = await request(
+          'http://192.168.86.247:5000/graphql',
+          query,
+          variables,
+        );
         return resp;
       } catch (error) {
         console.warn(error);
@@ -98,19 +115,24 @@ function useMutateNote() {
       }
     } else if (newNote.drawing != '') {
       const query = gql`
-        mutation {
+        mutation Images($drawing: String) {
           note(author: "${String(newNote.author)}", 
           noteData: {
             name: "${String(newNote.name)}", 
             body: "${String(newNote.body)}", 
-            drawing: "data:image/png;base64,${String(newNote.drawing)
-              .replace('\r', '')
-              .replace('\n', '')}"}) {
+            drawing: $drawing}) {
             ok
           }
       }`;
+      const variables = {
+        drawing: `data:image/png;base64,${String(newNote.drawing)}`,
+      };
       try {
-        const resp = await request('http://192.168.86.247:5000/graphql', query);
+        const resp = await request(
+          'http://192.168.86.247:5000/graphql',
+          query,
+          variables,
+        );
         return resp;
       } catch (error) {
         console.warn(error);
