@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Camera} from './CameraView';
-import {SketchCanvas} from '@terrylinla/react-native-sketch-canvas';
 import {DrawingView} from './DrawingView';
 import {useMutateNote} from '../api/hooks';
 
@@ -20,6 +19,8 @@ const NewNote = ({mutation}) => {
   let [camera, setCamera] = useState(null);
   let [base64Img, setBase64Img] = useState('');
   let [base64Drawing, setBase64Drawing] = useState('');
+  let [previewImg, setPreviewImg] = useState('');
+  let [previewVisible, setPreviewVisible] = useState(false);
   let [cameraVisible, setCameraVisible] = useState(false);
   let [drawingVisible, setDrawingVisible] = useState(false);
 
@@ -118,28 +119,40 @@ const NewNote = ({mutation}) => {
             <Icon name={'brush-outline'} size={25} />
           </TouchableOpacity>
           {base64Img === '' ? null : (
-            <Image
-              source={{
-                uri: `data:image/png;base64,${base64Img}`,
-              }}
-              style={{
-                height: 50,
-                width: 50,
-                margin: 5,
-              }}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                setPreviewImg(base64Img);
+                setPreviewVisible(true);
+              }}>
+              <Image
+                source={{
+                  uri: `data:image/png;base64,${base64Img}`,
+                }}
+                style={{
+                  height: 50,
+                  width: 50,
+                  margin: 5,
+                }}
+              />
+            </TouchableOpacity>
           )}
           {base64Drawing === '' ? null : (
-            <Image
-              source={{
-                uri: `data:image/png;base64,${base64Drawing}`,
-              }}
-              style={{
-                height: 50,
-                width: 50,
-                margin: 5,
-              }}
-            />
+            <TouchableOpacity
+              onPress={() => {
+                setPreviewImg(base64Drawing);
+                setPreviewVisible(true);
+              }}>
+              <Image
+                source={{
+                  uri: `data:image/png;base64,${base64Drawing}`,
+                }}
+                style={{
+                  height: 50,
+                  width: 50,
+                  margin: 5,
+                }}
+              />
+            </TouchableOpacity>
           )}
         </View>
       </View>
