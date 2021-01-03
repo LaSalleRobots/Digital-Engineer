@@ -25,3 +25,8 @@ class Note(ObjectType):
 
     def resolve_authors(root, info):
         return db["authors"].find({"notes": str(root["_id"])})[:]
+
+
+class SearchResult(ObjectType):
+    authors = List(Author)
+    notes = List(Note)

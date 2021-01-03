@@ -45,3 +45,11 @@ class Query(ObjectType):
     def resolve_feed(parent, info):
         return db["notes"].find({}).sort("date", pymongo.DESCENDING)
 
+    search = Field(SearchResult, query=String(required=True))
+
+    def resolve_search(parrent, info, query):
+        res = {
+            "authors": db["authors"].find({"$text": {"$search": query}}),
+            "notes": db["notes"].find({"$text": {"$search": query}}),
+        }
+        return res

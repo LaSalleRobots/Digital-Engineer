@@ -12,14 +12,25 @@ app.add_url_rule(
     "/graphql", view_func=GraphQLView.as_view("graphql", schema=schema, graphiql=True)
 )
 
-
-@app.route("/api/v1/save", methods=["POST"])
-def saveImage():
-    imgdata = base64.b64decode(request.data)
-    with open(f"{datetime.datetime.now()}.png", "wb") as f:
-        f.write(imgdata)
-    return "ok"
-
-
 if __name__ == "__main__":
+    import pymongo
+
+    client = pymongo.MongoClient()
+    db = client["digital-engineer"]
+    try:
+        db["authors"].create_index(
+            [("name", pymongo.TEXT), ("position", pymongo.TEXT)],
+            weights={"name": 5, "position": 1},
+        )
+    except Exception as e:
+        print(e)
+        pass
+    try:
+        db["notes"].create_index(
+            [("name", pymongo.TEXT), ("body", pymongo.TEXT)],
+            weights={"name": 5, "body": 1},
+        )
+    except Exception as e:
+        print(e)
+        pass
     app.run("0.0.0.0", "5000", load_dotenv=True)
