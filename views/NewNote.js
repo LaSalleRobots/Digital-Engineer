@@ -224,7 +224,20 @@ const App = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       {mutation.isLoading ? (
-        <Text>Loading...</Text>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            flex: 1,
+          }}>
+          <Icon name="sync-circle-outline" size={80} />
+          <Text
+            style={{
+              fontSize: 30,
+            }}>
+            Loading...
+          </Text>
+        </View>
       ) : (
         <NewNote mutation={mutation} />
       )}

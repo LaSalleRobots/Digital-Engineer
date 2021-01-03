@@ -73,10 +73,23 @@ const SearchView = () => {
       </View>
       <View
         style={{
-          flex: 10,
+          flex: 9,
         }}>
         {isLoading ? (
-          <Text style={{fontSize: 40}}>Loading...</Text>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flex: 1,
+            }}>
+            <Icon name="sync-circle-outline" size={80} />
+            <Text
+              style={{
+                fontSize: 30,
+              }}>
+              Loading...
+            </Text>
+          </View>
         ) : (
           <FlatList data={notes} keyExtractor={(e) => e.Id} renderItem={Cell} />
         )}
