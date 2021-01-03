@@ -25,6 +25,41 @@ function useAuthor(name) {
   });
 }
 
+function useSearchNotes(term) {
+  return useQuery(['searchNotes', term], async () => {
+    const query = gql`
+      query searchQuery($term: String!) {
+        search(query: $term) {
+          notes {
+            Id
+            name
+            body
+            photo
+            drawing
+            authors {
+              name
+            }
+          }
+        }
+      }
+    `;
+    const variables = {
+      term: term,
+    };
+    try {
+      const resp = await request(
+        'http://192.168.86.247:5000/graphql',
+        query,
+        variables,
+      );
+      return resp;
+    } catch (error) {
+      console.warn(error);
+      throw error;
+    }
+  });
+}
+
 function useNotes() {
   return useQuery('notes', async () => {
     const query = gql`
@@ -187,4 +222,4 @@ function useMutateNote() {
   });
 }
 
-export {useAuthor, useNotes, useMutateNote, useFeed};
+export {useAuthor, useNotes, useMutateNote, useFeed, useSearchNotes};
