@@ -13,19 +13,19 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NoteCardView from './NoteCardView';
-import {useFeed, useNotes} from '../api/hooks';
+import {useFeed, useSearchNotes} from '../api/hooks';
+import {useQueryClient} from 'react-query';
 
 const SearchView = () => {
+  const queryClient = useQueryClient();
   const {isLoading, isError, data, error} = useFeed();
   const Cell = ({item, key}) => <NoteCardView {...item} key={key} />;
 
-  let notes = data != null ? data.feed : null;
   const modes = [
     {icon: 'chevron-up', mode: 'normal'},
     {icon: 'chevron-down', mode: 'reversed'},
   ];
   let [mode, setMode] = useState(modes[1]);
-
   console.log(data);
 
   if (isError) {
@@ -39,6 +39,8 @@ const SearchView = () => {
     );
   }
 
+  let results = data != null ? data.feed : null;
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <View
@@ -49,15 +51,15 @@ const SearchView = () => {
           alignItems: 'center',
           flex: 1,
         }}>
-        <TextInput
-          placeholder="Search..."
+        <Text
           style={{
-            fontSize: 35,
             flex: 6,
-          }}
-          placeholderTextColor={'grey'}
-          autoFocus={false}
-        />
+            fontSize: 35,
+            fontWeight: 'bold',
+          }}>
+          DigitalEngineer
+        </Text>
+
         <TouchableOpacity
           style={{flex: 1}}
           onPress={() => {
@@ -66,7 +68,7 @@ const SearchView = () => {
             } else {
               setMode(modes[0]);
             }
-            notes.reverse();
+            results.reverse();
           }}>
           <Icon name={mode.icon} size={35} />
         </TouchableOpacity>
@@ -91,7 +93,15 @@ const SearchView = () => {
             </Text>
           </View>
         ) : (
-          <FlatList data={notes} keyExtractor={(e) => e.Id} renderItem={Cell} />
+          <FlatList
+            data={results}
+            keyExtractor={(e) => e.Id}
+            renderItem={Cell}
+            refreshing={isLoading}
+            onRefresh={() => {
+              queryClient.refetchQueries('feed');
+            }}
+          />
         )}
       </View>
     </SafeAreaView>
