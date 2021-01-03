@@ -32,7 +32,35 @@ function useNotes() {
         notes {
           Id
           name
-          date
+          body
+          photo
+          drawing
+          authors {
+            name
+          }
+        }
+      }
+    `;
+    try {
+      const resp = await request('http://192.168.86.247:5000/graphql', query);
+      return resp;
+    } catch (error) {
+      console.warn(error);
+      throw error;
+    }
+  });
+}
+
+function useFeed() {
+  return useQuery('feed', async () => {
+    const query = gql`
+      query {
+        feed {
+          Id
+          name
+          body
+          photo
+          drawing
           authors {
             name
           }
@@ -159,4 +187,4 @@ function useMutateNote() {
   });
 }
 
-export {useAuthor, useNotes, useMutateNote};
+export {useAuthor, useNotes, useMutateNote, useFeed};

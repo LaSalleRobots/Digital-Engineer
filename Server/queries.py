@@ -39,3 +39,9 @@ class Query(ObjectType):
 
     def resolve_notes(parent, info):
         return db["notes"].find({})
+
+    feed = Field(List(Note))
+
+    def resolve_feed(parent, info):
+        return db["notes"].find({}).sort("date", pymongo.DESCENDING)
+
